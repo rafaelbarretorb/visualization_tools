@@ -1,0 +1,49 @@
+#!/usr/bin/env python
+
+import rospy
+import time
+from std_msgs.msg import Int32
+from geometry_msgs.msg import Pose, PoseArray
+from goals_sequence_path_planner.msg import PathArray
+
+def publish_path():
+	rospy.init_node('test_publisher', anonymous=True)
+
+	paths = PathArray()
+	for i in range(3):
+		path = PoseArray()
+		for j in range(2):
+			p = Pose()
+			p.position.x = j + 2*i
+			p.position.y = j + 2*i
+			path.poses.append(p)
+		
+		paths.paths.append(path)
+
+	pub_path = rospy.Publisher('global_planner', PathArray, queue_size=100)
+	pub_del = rospy.Publisher('delete_markers', Int32, queue_size=10)
+
+	zero_time = rospy.Time.from_sec(time.time())
+
+	rate = rospy.Rate(1)
+
+	publishing = True
+	while not rospy.is_shutdown():
+		t = rospy.Time.from_sec(time.time()) - zero_time
+		t_secs = t.to_sec()
+
+		if publishing:
+			pub_path.publish(paths)
+		
+		rospy.loginfo("Time: %f" % t_secs)
+		if t_secs > 10.0 and publishing:
+			pub_del.publish(1)
+			publishing = False
+
+		rate.sleep()
+
+if __name__ == '__main__':
+    try:
+        publish_path()
+    except rospy.ROSInterruptException:
+        pass

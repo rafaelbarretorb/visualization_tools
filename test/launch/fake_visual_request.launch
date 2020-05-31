@@ -1,0 +1,5 @@
+<launch>
+    <node pkg="visualization_tools" type="test_visualization" name="test_publisher"  output="screen">
+    </node>
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find visualization_tools)/rviz/test.rviz" output="screen"/>
+</launch>

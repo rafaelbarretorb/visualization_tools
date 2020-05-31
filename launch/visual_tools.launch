@@ -1,0 +1,7 @@
+<launch>
+    <node pkg="visualization_tools" type="topics_advertiser" name="visual_topics_advertiser"  output="screen">
+    </node>
+  
+    <node pkg="visualization_tools" type="visualization" name="marker_publisher"  output="screen">
+    </node>
+</launch>
