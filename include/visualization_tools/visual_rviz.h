@@ -8,6 +8,7 @@
 // ROS message types
 #include <std_msgs/Int32.h>
 #include <visualization_msgs/Marker.h>
+#include <geometry_msgs/PoseArray.h>
 
 
 #include <goals_sequence_path_planner/PathArray.h>
@@ -39,22 +40,32 @@ class VisualRviz {
   void globalPlannerPaths(const goals_sequence_path_planner::PathArray &paths,
                           int marker_lifetime);
 
+  void referencePathCb(const geometry_msgs::PoseArray &path);
+
+  void referencePath(const geometry_msgs::PoseArray &path,
+                          int marker_lifetime);
+
   void deleteMarkersCb(const std_msgs::Int32 &n);
 
  private:
   ros::NodeHandle nh_;
 
   ros::Publisher global_planner_marker_pub_;
+  ros::Publisher reference_planner_marker_pub_;
 
   visualization_msgs::Marker global_path_marker_;
+  visualization_msgs::Marker reference_path_marker_;
 
   bool global_path_marker_initialized_;
+  bool reference_path_marker_initialized_;
 
   std::string global_frame_;
 
   goals_sequence_path_planner::PathArray global_paths_;
+  geometry_msgs::PoseArray reference_path_;
 
   ros::Subscriber global_paths_sub_;
+  ros::Subscriber reference_path_sub_;
   ros::Subscriber del_markers_sub_;
 };
 
