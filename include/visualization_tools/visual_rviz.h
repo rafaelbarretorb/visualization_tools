@@ -42,22 +42,27 @@ class VisualRviz {
 
   void referencePathCb(const geometry_msgs::PoseArray &path);
 
-  void referencePath(const geometry_msgs::PoseArray &path,
-                          int marker_lifetime);
+  void referencePath(const geometry_msgs::PoseArray &path, int marker_lifetime);
 
   void deleteMarkersCb(const std_msgs::Int32 &n);
+
+  void goalsPositions(const goals_sequence_path_planner::PathArray &paths,
+                      int marker_lifetime);
 
  private:
   ros::NodeHandle nh_;
 
   ros::Publisher global_planner_marker_pub_;
   ros::Publisher reference_planner_marker_pub_;
+  ros::Publisher goals_positions_pub_;
 
-  visualization_msgs::Marker global_path_marker_;
+  visualization_msgs::Marker global_path_marker_{};
   visualization_msgs::Marker reference_path_marker_;
+  visualization_msgs::Marker goal_positions_marker_;
 
-  bool global_path_marker_initialized_;
-  bool reference_path_marker_initialized_;
+  bool global_path_marker_initialized_{false};
+  bool reference_path_marker_initialized_{false};
+  bool goal_positions_initialized_{false};
 
   std::string global_frame_;
 
