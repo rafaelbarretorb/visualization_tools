@@ -8,6 +8,7 @@
 // ROS message types
 #include <std_msgs/Int32.h>
 #include <visualization_msgs/Marker.h>
+#include <visualization_msgs/MarkerArray.h>
 #include <geometry_msgs/PoseArray.h>
 
 
@@ -54,15 +55,14 @@ class VisualRviz {
 
   ros::Publisher global_planner_marker_pub_;
   ros::Publisher reference_planner_marker_pub_;
-  ros::Publisher goals_positions_pub_;
+  ros::Publisher goal_positions_pub_;
 
   visualization_msgs::Marker global_path_marker_{};
   visualization_msgs::Marker reference_path_marker_;
-  visualization_msgs::Marker goal_positions_marker_;
+  visualization_msgs::MarkerArray goal_positions_marker_;
 
   bool global_path_marker_initialized_{false};
   bool reference_path_marker_initialized_{false};
-  bool goal_positions_initialized_{false};
 
   std::string global_frame_;
 
